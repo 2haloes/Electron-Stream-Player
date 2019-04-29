@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/2haloes/Electron-Stream-Player/issues"
   },
-  "homepage": "https://github.com/2haloes/Electron-Stream-Player#readme"
+  "homepage": "https://github.com/2haloes/Electron-Stream-Player#readme",
+  "devDependencies": {
+    "electron": "^5.0.0"
+  }
 }
