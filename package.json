@@ -1,0 +1,25 @@
+{
+  "name": "electron-stream-player",
+  "version": "0.5.0",
+  "description": "A player that can play any webstream, built on Electron",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2haloes/Electron-Stream-Player.git"
+  },
+  "keywords": [
+    "Video",
+    "Player",
+    "Open",
+    "Source"
+  ],
+  "author": "2haloes",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/2haloes/Electron-Stream-Player/issues"
+  },
+  "homepage": "https://github.com/2haloes/Electron-Stream-Player#readme"
+}
