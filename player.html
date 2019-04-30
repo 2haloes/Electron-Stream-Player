@@ -3,6 +3,7 @@
 <html>
     <head>
         <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/silvermine-videojs-quality-selector@1.1.2/dist/css/quality-selector.css">
         <link href="css/stylesheet.css" rel="stylesheet">
         <meta charset="UTF-8">
         <title>Stream player</title>
@@ -12,12 +13,27 @@
                 <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
         </video-js>
 
-        <script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
+        <!-- <script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
+        <script src='https://cdn.jsdelivr.net/npm/silvermine-videojs-quality-selector@1.1.2/src/js/index.min.js'></script> -->
         <script>
-            
+            var videojs = require('video.js');
 
-            var player = videojs('main_video');
-            player.src('');
+            let options = {
+                controlBar: {
+                    children: [
+                        'playToggle',
+                        'progressControl',
+                        'volumePanel',
+                        'qualitySelector',
+                        'fullscreenToggle',
+                    ],
+                },
+            };
+            
+            let player = videojs('main_video', options);
+
+            
+            player.src('./VideoLink.m3u8');
             player.play();
         </script>
     </body>
