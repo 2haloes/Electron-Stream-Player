@@ -1,0 +1,8 @@
+.no-margin {
+    margin: 0;
+}
+
+.player-size {
+    width: 100vw; 
+    height: 100vh;
+}

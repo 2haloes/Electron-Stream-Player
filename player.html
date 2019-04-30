@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+        <link href="css/stylesheet.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <title>Stream player</title>
+    </head>
+    <body class="no-margin">
+        <video-js id="main_video" class="player-size vjs-default-skin video-js" controls preload="auto">
+                <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+        </video-js>
+
+        <script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
+        <script>
+            
+
+            var player = videojs('main_video');
+            player.src('');
+            player.play();
+        </script>
+    </body>
+</html>

@@ -15,7 +15,7 @@ function createWindow() {
     })
 
     // Open the index page
-    win.loadFile('index.html')
+    win.loadFile('player.html')
 
     win.on('closed', () => {
         // When a window is closed, remove the refrence to it 
