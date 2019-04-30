@@ -14,6 +14,9 @@ function createWindow() {
         }
     })
 
+    // Hide the menu bar
+    win.setMenuBarVisibility(false);
+
     // Open the index page
     win.loadFile('player.html')
 
