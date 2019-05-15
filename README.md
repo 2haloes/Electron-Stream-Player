@@ -20,6 +20,6 @@ But the GPL just doesn't sit right with me, I want someone to use this if they w
 
 The MPL sits well with me, mixing some GPL with some weaker licenses.
 
-MPL requires modifications to be shared as well as source code to be provided
+MPL requires modifications to be shared as well as source code of the MPL licensed files to be provided
 
-But it also allows this to be a part of larger works without a web of issues
+But it also allows this to be a part of larger works under a different license as long as the MPL files are offered under MPL as well
