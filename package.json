@@ -27,7 +27,6 @@
     "electron": "^5.0.10"
   },
   "dependencies": {
-    "silvermine-videojs-quality-selector": "^1.1.2",
     "video.js": "^7.6.0"
   }
 }
