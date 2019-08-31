@@ -77,6 +77,28 @@
                         player.volume(0);
                     }
                 }
+                // 36 = Home
+                else if(event.keyCode === 36) {
+                    player.currentTime(0)
+                }
+                // 35 = End
+                else if(event.keyCode === 35) {
+                    player.currentTime(player.duration() - 5)
+                }
+                // 48-57 = Num keys
+                else if(event.keyCode >= 48 && event.keyCode <= 57) {
+                    player.currentTime((player.duration() / 10) * (event.keyCode - 48))
+                }
+                // 70 = f
+                else if(event.keyCode === 70) {
+                    if (player.isFullscreen()) {
+                        player.exitFullscreen();
+                        player.isFullscreen(false);
+                    } else {
+                        player.requestFullscreen();
+                        player.isFullscreen(true);
+                    }
+                }
             }
         </script>
     </body>
