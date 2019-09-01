@@ -1,7 +1,6 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu } = require('electron')
 
-// This is the first shot I've made at an electron app, created in a hurry as a solution to my other program (RT Stream App) not working with most players due to changes out of my control
-// So this probably won't be perfect on the first try but I'll do my best with it.
+// Hopefully this isn't a dumpster fire of an electron app, I promise that I'm doing my best
 
 // Need to keep a refrence open for the window. If not, the window can close after being caught by garbage collection
 let win
@@ -12,18 +11,30 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true
         }
-    })
+    });
 
     // Hide the menu bar
-    win.setMenuBarVisibility(false);
+    //win.setMenuBarVisibility(false);
 
     // Open the index page
-    win.loadFile('player.html')
+    win.loadFile('player.html');
 
     win.on('closed', () => {
         // When a window is closed, remove the refrence to it 
         win = null
-    })
+    });
+
+    // Sets up the menu bar
+    var menuTemplate = Menu.buildFromTemplate([{
+        label: 'File',
+        submenu: [
+            {label: 'Open File'},
+            {label: 'Go Fullscreen'},
+            {label: 'Exit'}
+        ]
+    }]);
+    // Sets the menu to the above
+    Menu.setApplicationMenu(menuTemplate);
 }
 
 // Some APIs can only be used after the app has fully initialized
