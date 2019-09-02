@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu, dialog } = require('electron')
+const shell = require('electron').shell;
 
 // Hopefully this isn't a dumpster fire of an electron app, I promise that I'm doing my best
 
@@ -41,7 +42,8 @@ function createWindow() {
                             {name: 'Video files', extensions: ['mp4', 'webm', 'm3u8', 'ts']}
                         ]
                     }));
-                }
+                },
+                accelerator: 'CmdOrCtrl+F'
             },
             {
                 label: 'Go Fullscreen',
@@ -50,9 +52,38 @@ function createWindow() {
                 }
             },
             {
+                type: 'separator'
+            },
+            {
                 label: 'Exit',
                 click() {
                     app.quit();
+                }
+            }
+        ]
+    },
+    {
+        label: 'Help',
+        submenu: [
+            {
+                label: 'Version: ' + app.getVersion()
+            },
+            {
+                label: 'License: Mozilla Public License 2.0'
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'View on Github',
+                click() {
+                    shell.openExternal('https://github.com/2haloes/Electron-Stream-Player');
+                }
+            },
+            {
+                label: 'View and report issues',
+                click() {
+                    shell.openExternal('https://github.com/2haloes/Electron-Stream-Player/issues');
                 }
             }
         ]
