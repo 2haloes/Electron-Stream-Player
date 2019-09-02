@@ -24,6 +24,8 @@ function createWindow() {
         win = null
     });
 
+    win.webContents.openDevTools();
+
     // Sets up the menu bar
     var menuTemplate = Menu.buildFromTemplate([{
         label: 'File',

@@ -32,13 +32,41 @@
             };
             
             let player = videojs('main_video', options);
-            storedVolume = player.volume();
+            
+            setup();
+            dragDrop();
 
-            document.addEventListener('keydown', keyRespond);
+            function setup() {
+                storedVolume = player.volume();
 
-            ipcRenderer.on('file-open', openFile);
-            ipcRenderer.on('fullscreen', goFullscreen);
+                document.addEventListener('keydown', keyRespond);
 
+                ipcRenderer.on('file-open', openFile);
+                ipcRenderer.on('fullscreen', goFullscreen);
+            }
+
+            function dragDrop() {
+                
+                document.body.ondragover = () => {
+                    return false;
+                }
+
+                document.body.ondragleave = () => {
+                    return false;
+                }
+
+                document.body.ondragend = () => {
+                    return false;
+                }
+
+                document.body.ondrop = (event) => {
+                    event.preventDefault();
+
+                    player.src(event.dataTransfer.files[0].path);
+
+                    return false;
+                }
+            }
 
             function keyRespond(event) {
                 // 32 = Space bar, 75 = k
