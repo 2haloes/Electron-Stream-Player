@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron')
+const { app, BrowserWindow, Menu, dialog } = require('electron')
 
 // Hopefully this isn't a dumpster fire of an electron app, I promise that I'm doing my best
 
@@ -28,9 +28,31 @@ function createWindow() {
     var menuTemplate = Menu.buildFromTemplate([{
         label: 'File',
         submenu: [
-            {label: 'Open File'},
-            {label: 'Go Fullscreen'},
-            {label: 'Exit'}
+            {
+                label: 'Open File',
+                click() {
+                    win.webContents.send('file-open', dialog.showOpenDialog({
+                        properties: [
+                            'openFile'
+                        ],
+                        filters: [
+                            {name: 'Video files', extensions: ['mp4', 'webm', 'm3u8', 'ts']}
+                        ]
+                    }));
+                }
+            },
+            {
+                label: 'Go Fullscreen',
+                click() {
+                    win.webContents.send('fullscreen', null);
+                }
+            },
+            {
+                label: 'Exit',
+                click() {
+                    app.quit();
+                }
+            }
         ]
     }]);
     // Sets the menu to the above
