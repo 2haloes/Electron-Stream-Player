@@ -1,7 +1,8 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, Menu, dialog } = require('electron')
+const shell = require('electron').shell;
+const path = require('path');
 
-// This is the first shot I've made at an electron app, created in a hurry as a solution to my other program (RT Stream App) not working with most players due to changes out of my control
-// So this probably won't be perfect on the first try but I'll do my best with it.
+// Hopefully this isn't a dumpster fire of an electron app, I promise that I'm doing my best
 
 // Need to keep a refrence open for the window. If not, the window can close after being caught by garbage collection
 let win
@@ -12,18 +13,95 @@ function createWindow() {
         webPreferences: {
             nodeIntegration: true
         }
-    })
-
-    // Hide the menu bar
-    win.setMenuBarVisibility(false);
+    });
 
     // Open the index page
-    win.loadFile('player.html')
+    win.loadFile('player.html');
 
     win.on('closed', () => {
         // When a window is closed, remove the refrence to it 
         win = null
-    })
+    });
+
+    // Sets up the menu bar
+    var menuTemplate = Menu.buildFromTemplate([{
+        label: 'File',
+        submenu: [
+            {
+                label: 'Open File',
+                click() {
+                    win.webContents.send('file-open', dialog.showOpenDialog({
+                        properties: [
+                            'openFile'
+                        ],
+                        filters: [
+                            {name: 'Video files', extensions: ['mp4', 'webm', 'm3u8', 'ts']},
+                            {name: 'Any', extensions: '*'}
+                        ]
+                    }));
+                },
+                accelerator: 'CmdOrCtrl+F'
+            },
+            {
+                label: 'Open URL',
+                click() {
+                    win.webContents.send('url-open', null);
+                }
+            },
+            {
+                label: 'Go Fullscreen',
+                click() {
+                    win.webContents.send('fullscreen', null);
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Exit',
+                click() {
+                    app.quit();
+                }
+            }
+        ]
+    },
+    {
+        label: 'Help',
+        submenu: [
+            {
+                label: 'Version: ' + app.getVersion()
+            },
+            {
+                label: 'License: Mozilla Public License 2.0'
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'View on Github',
+                click() {
+                    shell.openExternal('https://github.com/2haloes/Electron-Stream-Player');
+                }
+            },
+            {
+                label: 'View and report issues',
+                click() {
+                    shell.openExternal('https://github.com/2haloes/Electron-Stream-Player/issues');
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Icon by Icons8',
+                click() {
+                    shell.openExternal('https://icons8.com/');
+                }
+            }
+        ]
+    }]);
+    // Sets the menu to the above
+    Menu.setApplicationMenu(menuTemplate);
 }
 
 // Some APIs can only be used after the app has fully initialized

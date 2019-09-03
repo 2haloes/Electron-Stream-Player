@@ -1,11 +1,13 @@
 {
   "name": "electron-stream-player",
-  "version": "0.5.0",
+  "version": "0.9.0",
   "description": "A player that can play any webstream, built on Electron",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -24,9 +26,32 @@
   },
   "homepage": "https://github.com/2haloes/Electron-Stream-Player#readme",
   "devDependencies": {
-    "electron": "^5.0.10"
+    "electron": "^5.0.10",
+    "electron-builder": "^21.2.0"
   },
   "dependencies": {
+    "dialogs": "^2.0.1",
     "video.js": "^7.6.0"
+  },
+  "build": {
+    "appId": "com.2haloes.electronstreamplayer",
+    "files": [
+      "./build/**/*",
+      "./css/**/*",
+      "./player.html",
+      "./main.js",
+      "**/*",
+      "build/icon.png"
+    ],
+    "productName": "Electron Stream Player",
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": "AppImage",
+      "synopsis": "A simple player for any web stream"
+    }
   }
 }

@@ -13,10 +13,11 @@
                 <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
         </video-js>
 
-        <!-- <script src='https://vjs.zencdn.net/7.4.1/video.js'></script>
-        <script src='https://cdn.jsdelivr.net/npm/silvermine-videojs-quality-selector@1.1.2/src/js/index.min.js'></script> -->
         <script>
             var videojs = require('video.js');
+            var ipcRenderer = require('electron').ipcRenderer;
+            const Dialogs = require('dialogs');
+            const dialogs = Dialogs();
             var storedVolume;
 
             let options = {
@@ -33,14 +34,52 @@
             };
             
             let player = videojs('main_video', options);
-            storedVolume = player.volume();
-
-            document.addEventListener('keydown', keyRespond);
-
             
-            player.src('./VideoLink.m3u8');
-            player.play();
+            setup();
+            dragDrop();
 
+            function setup() {
+                storedVolume = player.volume();
+
+                document.addEventListener('keydown', keyRespond);
+
+                ipcRenderer.on('file-open', openFile);
+                ipcRenderer.on('fullscreen', goFullscreen);
+                ipcRenderer.on('url-open', openURL);
+
+                if (require('electron').remote.process.argv[1] !== '.' && !!require('electron').remote.process.argv[1]) {
+                    player.src(require('electron').remote.process.argv[1]);
+                }
+            }
+
+            function dragDrop() {
+                
+                document.body.ondragover = () => {
+                    return false;
+                }
+
+                document.body.ondragleave = () => {
+                    return false;
+                }
+
+                document.body.ondragend = () => {
+                    return false;
+                }
+
+                document.body.ondrop = (event) => {
+                    event.preventDefault();
+
+                    console.log('The file type is: ' + event.dataTransfer.files[0].type);
+
+                    if (!!event.dataTransfer.files) {
+                        player.src(event.dataTransfer.files[0].path);
+                    } else if (!!event.dataTransfer.getData('text')) {
+                        player.src(event.dataTransfer.getData('text'));
+                    }
+
+                    return false;
+                }
+            }
 
             function keyRespond(event) {
                 // 32 = Space bar, 75 = k
@@ -108,6 +147,26 @@
                         player.requestFullscreen();
                         player.isFullscreen(true);
                     }
+                }
+            }
+
+            function openFile(event, fileName) {
+                player.src(fileName);
+            }
+
+            function openURL() {
+                dialogs.prompt('Enter URL here:', urlAddress => {
+                    player.src(urlAddress);
+                });
+            }
+
+            function goFullscreen(){
+                if (player.isFullscreen()) {
+                        player.exitFullscreen();
+                        player.isFullscreen(false);
+                    } else {
+                        player.requestFullscreen();
+                        player.isFullscreen(true);
                 }
             }
         </script>
