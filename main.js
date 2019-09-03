@@ -35,11 +35,18 @@ function createWindow() {
                             'openFile'
                         ],
                         filters: [
-                            {name: 'Video files', extensions: ['mp4', 'webm', 'm3u8', 'ts']}
+                            {name: 'Video files', extensions: ['mp4', 'webm', 'm3u8', 'ts']},
+                            {name: 'Any', extensions: '*'}
                         ]
                     }));
                 },
                 accelerator: 'CmdOrCtrl+F'
+            },
+            {
+                label: 'Open URL',
+                click() {
+                    win.webContents.send('url-open', null);
+                }
             },
             {
                 label: 'Go Fullscreen',

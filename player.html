@@ -71,8 +71,10 @@
 
                     console.log('The file type is: ' + event.dataTransfer.files[0].type);
 
-                    if (event.dataTransfer.files[0].type === 'video/webm' || event.dataTransfer.files[0].type === 'video/mp4' || event.dataTransfer.files[0].type === 'video/MP2T' || event.dataTransfer.files[0].type === 'application/vnd.apple.mpegurl' || event.dataTransfer.files[0].type === 'audio/x-mpegurl') {
+                    if (!!event.dataTransfer.files) {
                         player.src(event.dataTransfer.files[0].path);
+                    } else if (!!event.dataTransfer.getData('text')) {
+                        player.src(event.dataTransfer.getData('text'));
                     }
 
                     return false;
