@@ -29,3 +29,25 @@
 .vjs-paused.vjs-has-started .vjs-big-play-button {
     display: block;
 }
+
+.dialog-widget.prompt {
+    background-color: #383838 !important;
+    border: solid 1px #000 !important;
+}
+
+.prompt > * {
+    color: white !important;
+}
+
+.ok, .cancel {
+    background-color: #2b2b2b !important;
+}
+
+.divider {
+    border-top: 0 !important;
+}
+
+.url {
+    display: none;
+}
+

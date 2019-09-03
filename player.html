@@ -16,6 +16,8 @@
         <script>
             var videojs = require('video.js');
             var ipcRenderer = require('electron').ipcRenderer;
+            const Dialogs = require('dialogs');
+            const dialogs = Dialogs();
             var storedVolume;
 
             let options = {
@@ -43,6 +45,7 @@
 
                 ipcRenderer.on('file-open', openFile);
                 ipcRenderer.on('fullscreen', goFullscreen);
+                ipcRenderer.on('url-open', openURL);
 
                 if (require('electron').remote.process.argv[1] !== '.' && !!require('electron').remote.process.argv[1]) {
                     player.src(require('electron').remote.process.argv[1]);
@@ -147,6 +150,12 @@
 
             function openFile(event, fileName) {
                 player.src(fileName);
+            }
+
+            function openURL() {
+                dialogs.prompt('Enter URL here:', urlAddress => {
+                    player.src(urlAddress);
+                });
             }
 
             function goFullscreen(){
