@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu, dialog } = require('electron')
 const shell = require('electron').shell;
+const path = require('path');
 
 // Hopefully this isn't a dumpster fire of an electron app, I promise that I'm doing my best
 
@@ -14,9 +15,6 @@ function createWindow() {
         }
     });
 
-    // Hide the menu bar
-    //win.setMenuBarVisibility(false);
-
     // Open the index page
     win.loadFile('player.html');
 
@@ -24,8 +22,6 @@ function createWindow() {
         // When a window is closed, remove the refrence to it 
         win = null
     });
-
-    win.webContents.openDevTools();
 
     // Sets up the menu bar
     var menuTemplate = Menu.buildFromTemplate([{
@@ -84,6 +80,15 @@ function createWindow() {
                 label: 'View and report issues',
                 click() {
                     shell.openExternal('https://github.com/2haloes/Electron-Stream-Player/issues');
+                }
+            },
+            {
+                type: 'separator'
+            },
+            {
+                label: 'Icon by Icons8',
+                click() {
+                    shell.openExternal('https://icons8.com/');
                 }
             }
         ]
