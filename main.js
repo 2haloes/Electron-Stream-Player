@@ -24,7 +24,33 @@ function createWindow() {
     });
 
     // Sets up the menu bar
-    var menuTemplate = Menu.buildFromTemplate([{
+    var menuTemplate = generateMenu();
+    // Sets the menu to the above
+    Menu.setApplicationMenu(menuTemplate);
+}
+
+// Some APIs can only be used after the app has fully initialized
+// I don't 100% think I need this but I want to be safe
+app.on('ready', createWindow)
+
+// Quit when all of the windows are closed
+app.on('window-all-closed', () => {
+    // On MacOS, applications can stay active until the user quits explicitly
+    // I don't use a Mac so I'm taking the documentation's word for it
+    if(process.platform !== 'darwin'){
+        app.quit();
+    }
+})
+
+app.on('activate', () => {
+    // On MacOS, if the window is closed but the icon is clicked then the window needs to be opened
+    if (win === null) {
+        createWindow()
+    }
+})
+
+function generateMenu() {
+    return Menu.buildFromTemplate([{
         label: 'File',
         submenu: [
             {
@@ -100,26 +126,4 @@ function createWindow() {
             }
         ]
     }]);
-    // Sets the menu to the above
-    Menu.setApplicationMenu(menuTemplate);
 }
-
-// Some APIs can only be used after the app has fully initialized
-// I don't 100% think I need this but I want to be safe
-app.on('ready', createWindow)
-
-// Quit when all of the windows are closed
-app.on('window-all-closed', () => {
-    // On MacOS, applications can stay active until the user quits explicitly
-    // I don't use a Mac so I'm taking the documentation's word for it
-    if(process.platform !== 'darwin'){
-        app.quit();
-    }
-})
-
-app.on('activate', () => {
-    // On MacOS, if the window is closed but the icon is clicked then the window needs to be opened
-    if (win === null) {
-        createWindow()
-    }
-})
