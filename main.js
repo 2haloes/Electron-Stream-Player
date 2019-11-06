@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu, dialog } = require('electron')
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron')
 const shell = require('electron').shell;
 const path = require('path');
 
@@ -127,3 +127,13 @@ function generateMenu() {
         ]
     }]);
 }
+
+ipcMain.on('goFullScreen', async(event) => {
+    Menu.setApplicationMenu(null);
+    return;
+})
+
+ipcMain.on('leaveFullScreen', async(event) => {
+    Menu.setApplicationMenu(generateMenu());
+    return;
+})

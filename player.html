@@ -10,6 +10,7 @@
     </head>
     <body class="no-margin">
         <video-js id="main_video" class="player-size vjs-default-skin video-js" controls preload="auto">
+                <!-- If this EVER appears, something has gone really badly wrong, Chromium runs Video.js perfctly as far as I know -->
                 <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
         </video-js>
 
@@ -140,13 +141,7 @@
                 // 70 = f
                 // Fullscreen if windowed, unfullscreen if not
                 else if(event.keyCode === 70) {
-                    if (player.isFullscreen()) {
-                        player.exitFullscreen();
-                        player.isFullscreen(false);
-                    } else {
-                        player.requestFullscreen();
-                        player.isFullscreen(true);
-                    }
+                    gofullscreen();
                 }
             }
 
@@ -162,9 +157,11 @@
 
             function goFullscreen(){
                 if (player.isFullscreen()) {
+                        ipcRenderer.send('leaveFullScreen');
                         player.exitFullscreen();
                         player.isFullscreen(false);
                     } else {
+                        ipcRenderer.send('goFullScreen');
                         player.requestFullscreen();
                         player.isFullscreen(true);
                 }
