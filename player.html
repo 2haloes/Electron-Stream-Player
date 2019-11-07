@@ -35,6 +35,8 @@
             };
             
             let player = videojs('main_video', options);
+
+            player.on('fullscreenchange', videojsFullscreen);
             
             setup();
             dragDrop();
@@ -141,7 +143,7 @@
                 // 70 = f
                 // Fullscreen if windowed, unfullscreen if not
                 else if(event.keyCode === 70) {
-                    gofullscreen();
+                    goFullscreen();
                 }
             }
 
@@ -157,13 +159,19 @@
 
             function goFullscreen(){
                 if (player.isFullscreen()) {
-                        ipcRenderer.send('leaveFullScreen');
                         player.exitFullscreen();
                         player.isFullscreen(false);
                     } else {
-                        ipcRenderer.send('goFullScreen');
                         player.requestFullscreen();
                         player.isFullscreen(true);
+                }
+            }
+
+            function videojsFullscreen() {
+                if (player.isFullscreen()) {
+                        ipcRenderer.send('goFullScreen');
+                    } else {
+                        ipcRenderer.send('leaveFullScreen');
                 }
             }
         </script>
