@@ -11,7 +11,8 @@ function createWindow() {
     // Create the window
     win = new BrowserWindow({ 
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true
         }
     });
 
@@ -45,7 +46,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     // On MacOS, if the window is closed but the icon is clicked then the window needs to be opened
     if (win === null) {
-        createWindow()
+        createWindow();
     }
 })
 
@@ -56,7 +57,7 @@ function generateMenu() {
             {
                 label: 'Open File',
                 click() {
-                    win.webContents.send('file-open', dialog.showOpenDialog({
+                    win.webContents.send('file-open', dialog.showOpenDialogSync({
                         properties: [
                             'openFile'
                         ],

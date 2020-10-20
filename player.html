@@ -19,6 +19,7 @@
             var ipcRenderer = require('electron').ipcRenderer;
             const Dialogs = require('dialogs');
             const dialogs = Dialogs();
+            const remote = require('electron').remote;
             var storedVolume;
 
             let options = {
@@ -50,8 +51,8 @@
                 ipcRenderer.on('fullscreen', goFullscreen);
                 ipcRenderer.on('url-open', openURL);
 
-                if (require('electron').remote.process.argv[1] !== '.' && !!require('electron').remote.process.argv[1]) {
-                    player.src(require('electron').remote.process.argv[1]);
+                if (remote.process.argv[1] && remote.process.argv[1] !== '.') {
+                    player.src(remote.process.argv[1]);
                 }
             }
 
